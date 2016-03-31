@@ -2,8 +2,6 @@ language: shell
 os:
 - linux
 - osx
-before_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
