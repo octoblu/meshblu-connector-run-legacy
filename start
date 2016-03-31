@@ -1,0 +1,21 @@
+#!/bin/bash
+
+verify_env(){
+  if [ -z "$DEBUG" ]; then
+    export DEBUG='meshblu-connector*'
+  fi
+
+  if [ -z "$MESHBLU_CONNECTOR" ]; then
+    echo "Missing MESHBLU_CONNECTOR enviroment"
+    exit 1
+  fi
+}
+
+main(){
+  verify_env
+  local connector="meshblu-${MESHBLU_CONNECTOR}"
+  npm install "$connector"
+  node "./node_modules/${connector}/command.js"
+}
+
+main

@@ -1,15 +1,36 @@
-language: node_js
-node_js:
-- '5'
-addons:
-  code_climate:
-    repo_token: "23edf7695eb19ab4c9f74a317fef371d61cf1391a62ebd157a7b8b5d79b0c384"
+language: shell
+os:
+- linux
+- osx
 before_script:
-- npm install -g codeclimate-test-reporter
-after_script:
-- codeclimate-test-reporter < coverage/lcov.info
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
+before_install:
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
+- nvm install 5
+- npm install -g npm
+install:
+- npm install
+script:
+- if [ "$TRAVIS_OS_NAME" != "osx" ]; then npm test; fi
+before_deploy:
+- curl -fsS https://meshblu-connector.octoblu.com/tools/packager/v4.0.0/build.sh -o .build.sh
+- chmod +x ./.build.sh
+- ./.build.sh run-legacy ${TRAVIS_TAG:-$TRAVIS_COMMIT} $TRAVIS_OS_NAME
 deploy:
-  provider: npm
+- provider: s3
+  access_key_id: AKIAJH2D5IPIRHYJT5IA
+  secret_access_key:
+    secure: "jRow0QUPx7XFcp1ZcjDUagzQVHxreAAUPEjS0UqCVCdzEkgsC+sZ2N3cybwvrPtXtZ2i+oUDQ4F/8w1AOXMTMgkZuo9qmMO9xzY6ov215LflcBp+Waxyi5CYfqeglQKvcra4NftHPhZBbhrghtfzpFO7Lhe7A3UUSNoqbr27JC7hdj0osyC90H4gXJiueAeYobNv6Ulhtj1Et4LnlmUkY34Ez9fw3arh+q8CG/WL7xkqNtcBZMYVf86A9HIXKfkV7/eHF25mo0+ief0pv/DjYhLp3H5ch+ql2uxnfbIUbV/4Unbh93V8JP9Mp/7jtTLHtHXAAs9ty1+CJq7AKjovlwQsRwt6xQVeufLEUMY5fwatIbDDFXFMrOIXNFpO2G8AhgstJmn6GC9kit1Wj6tQm/ME6YchRbqrPYS0SKRTUqrfBo9UjDJHaXmXmDQMfXSd5d2yGcEux/WfTQTofqwPWOEl99aJPJNNa+sg8QRZs9TCL+Vez0UmZHRIHTQiuZ4FuZ8w4mzKsH89juUFW1UiN5bDJrlqc6f9birF0UjN24iY/3fQVOkbopuZOrXX79PJ3V3wkzCfhvDvDo9JNvem4digs1cgS8DbDuV42sT9mzxZ0NkAp8hQYbP11kyE2m1qSbXNpxT9QYUfC1cbmHTP+DMI4goyBlYdYtarjmuyBIQ="
+  bucket: meshblu-connector
+  local-dir: deploy
+  upload-dir: connectors
+  region: us-west-2
+  skip_cleanup: true
+  on:
+    tags: true
+    branches: true
+- provider: npm
   email: serveradmin@octoblu.com
   api_key:
     secure: KzvA82OOkLX7tajo4EsK21KVjqvrTBKM2TK0Q29ZHRJ7FAIP9hcicRkULvcuCrTONepVTlli9fsYDYs7Jha+r1VOld54Y5u4UHdxLpVX8LwRKXpcaYPdI+hydad6Qc5/RJdW6gtonG9iDI5wtkp641IYz9KoeaoGAlMvFJnIjB3kD0wySBFDTMOUstoRm+Djc9ZHwNgCrNWP5Jn3MXDTrr/q9HuSZgNAXQ4//Yf7B2kM20QSEob4LhjSxqGX5yG3/wnNCOIJeIwOhzMrNbZDRr08un8bMLLXoCOr7V1kSLt2LDmsrBUWl54UxHyqlW+ra2o/rA+ukSmm0Dne54PLzsU0nrOADYrzwVu3B/MU3uZOdpF5/H+xgpfexhFNSeYen69CFPj2qLZ2L1wqLzgoc4nCrgI90REMAdc+aXEXfD27Z8eSdUQHuDfaMaCTg83NKcgE7Kb9fjuIDS9jZmnGKniocSCTxUklFm3/Cz1olczJ2SjnQXoNgfTvW3Q8wxdYRvcFCLM+dNm3juZsTEcRG7zT9i1hccT72zhYzKL06LtzF0ofj9O3ZwIrCjKwq8pKibQaJCaPo7lsbutdvfpKtceHLnjijvBMcpmqpSVdP2OmWl+6NgOHWk9cYiQjOZhVBrKqzr9Y7F0BmPPndZRhIIZj+FuWKXk9lqAlbl4r5SA=
