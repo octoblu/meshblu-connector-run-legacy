@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-run-legacy",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Meshblu connector for running legacy connectors",
   "main": "index.js",
   "scripts": {
