@@ -2,6 +2,18 @@ language: cpp
 os:
 - linux
 - osx
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+    - g++-4.8-multilib
+    - gcc-multilib
+    - build-essential
+    - libbluetooth-dev
+    - libudev-dev
+    - libusb-1.0-0-dev
 env:
   matrix:
   - PACKAGER_NODE_VERSION="0.10" PACKAGER_ARCH="amd64"
@@ -23,7 +35,7 @@ matrix:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.1/travis_install_node.sh" | bash
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.2/travis_install_node.sh" | bash
 install:
 - npm install
 script:
@@ -34,7 +46,7 @@ before_deploy:
 - if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true fi
 - export PACKAGER_CONNECTOR="run-legacy"
 - export PACKAGER_TAG="$TRAVIS_TAG"
-- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.1/build.sh" | bash
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.2/build.sh" | bash
 deploy:
 - provider: s3
   access_key_id: AKIAJH2D5IPIRHYJT5IA
