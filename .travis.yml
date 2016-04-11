@@ -41,9 +41,9 @@ install:
 script:
 - npm test
 before_deploy:
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin" fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux" fi
-- if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin"; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux"; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
 - export PACKAGER_CONNECTOR="run-legacy"
 - export PACKAGER_TAG="$TRAVIS_TAG"
 - curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.2/build.sh" | bash
