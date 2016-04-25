@@ -1,0 +1,11 @@
+{
+  "schemas": {
+    "version": "1.0.0",
+    "messages": [
+    ],
+    "configure": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}
