@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-run-legacy",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Meshblu connector for running legacy connectors",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,10 @@
   },
   "homepage": "https://github.com/octoblu/meshblu-connector-run-legacy#readme",
   "devDependencies": {
-    "meshblu-connector-packager": "^11.0.3"
+    "meshblu-connector-packager": "^12.0.0"
   },
   "dependencies": {},
   "meshbluConnector": {
-    "connectorAssemblerVersion": "v7.0.0",
-    "dependencyManagerVersion": "v1.0.7",
-    "ignitionVersion": "v1.0.6",
     "githubSlug": "octoblu/run-legacy",
     "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-run-legacy/v3.0.0/schemas.json"
   }
