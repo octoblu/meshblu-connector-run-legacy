@@ -1,4 +1,4 @@
-# meshblu-connector-run-legacy
+# [Deprecated] meshblu-connector-run-legacy
 Meshblu connector for running legacy connectors
 
 [![Build Status](https://travis-ci.org/octoblu/meshblu-connector-run-legacy.svg?branch=master)](https://travis-ci.org/octoblu/meshblu-connector-run-legacy)
