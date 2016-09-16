@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "package": "meshblu-connector-packager",
-    "test": "exit 0"
+    "test": "istanbul cover _mocha -- -R spec --require coffee-coverage/register-istanbul && mocha --reporter json > coverage/mocha.json"
   },
   "repository": {
     "type": "git",
