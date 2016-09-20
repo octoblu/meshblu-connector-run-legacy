@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "package": "meshblu-connector-packager",
-    "test": "istanbul cover _mocha -- -R spec --require coffee-coverage/register-istanbul && mocha --reporter json > coverage/mocha.json"
+    "test": "mocha",
+    "coverage": "nyc npm test",
+    "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json",
+    "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "repository": {
     "type": "git",
@@ -18,12 +21,25 @@
   },
   "homepage": "https://github.com/octoblu/meshblu-connector-run-legacy#readme",
   "devDependencies": {
-    "istanbul": "^0.4.5",
-    "meshblu-connector-packager": "^12.0.0"
+    "meshblu-connector-packager": "^12.0.0",
+    "mocha-multi": "^0.9.1",
+    "mocha-osx-reporter": "^0.1.2",
+    "nyc": "^8.3.0"
   },
   "dependencies": {},
   "meshbluConnector": {
     "githubSlug": "octoblu/run-legacy",
     "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-run-legacy/v3.0.0/schemas.json"
+  },
+  "nyc": {
+    "cache": true,
+    "reporter": [
+      "text-summary",
+      "lcov",
+      "json"
+    ],
+    "extension": [
+      ".coffee"
+    ]
   }
 }
